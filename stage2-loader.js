@@ -1,45 +1,45 @@
 // stage2-loader.js
 (function () {
   try {
-    // --- CONFIG ---
+    /* ===== CONFIG ===== */
     var BASE = 'https://freekaamaal.github.io/shopify-ga4-demo/'; // folder hosting your final scripts
-    var REQUIRE_POC_PARAM = false; // set true if you want to gate loading via ?poc=1 during tests
+    var REQUIRE_POC_PARAM = false; // set true to only run when URL has ?poc=1
 
-    // --- GUARDS ---
-    var d = window.location.hostname;
-    var p = window.location.pathname;
-    var q = window.location.search || '';
+    /* ===== GUARDS / CONTEXT ===== */
+    var host = window.location.hostname;
+    var path = window.location.pathname;
+    var query = window.location.search || '';
 
-    if (REQUIRE_POC_PARAM && !/[?&]poc=1\b/.test(q)) return;
+    if (REQUIRE_POC_PARAM && !/[?&]poc=1\b/.test(query)) return;
 
-    // Normalize path checks
-    var isCheckout = /\/checkouts\//i.test(p);
-    var isThankYou = /thank[_-]?you/i.test(p);
+    var isCheckout = /\/checkouts\//i.test(path);
+    var isThankYou = /thank[_-]?you/i.test(path);
 
-    // Choose which final script to load
+    /* ===== PICK FILE =====
+       - checkout steps (contact/shipping/payment) → demo-final-checkout.js
+       - thank-you (order status) and everything else → demo-final.js
+    */
     var file = (isCheckout && !isThankYou)
-      ? 'demo-final-checkout.js'   // checkout steps (contact/shipping/payment)
-      : 'demo-final.js';           // thank-you and everything else
+      ? 'demo-final-checkout.js'
+      : 'demo-final.js';
 
-    // Build URL with diagnostics (+ cache busting so updates propagate instantly)
-    var src = BASE + file + '?domain=' + encodeURIComponent(d) + '&v=' + Date.now();
+    var src = BASE + file + '?domain=' + encodeURIComponent(host) + '&v=' + Date.now();
 
-    // Inject before the first <script> tag to run as early as possible
+    /* ===== INJECT EARLY (before first <script>) ===== */
     var s = document.createElement('script');
     s.async = true;
     s.src = src;
 
-    var firstScript = document.getElementsByTagName('script')[0];
-    if (firstScript && firstScript.parentNode) {
-      firstScript.parentNode.insertBefore(s, firstScript);
+    var first = document.getElementsByTagName('script')[0];
+    if (first && first.parentNode) {
+      first.parentNode.insertBefore(s, first);
     } else {
-      // fallback
       (document.head || document.documentElement).appendChild(s);
     }
 
-    // Optional debug logs (remove in production)
+    // Debug (remove if noisy)
     if (window.console && console.log) {
-      console.log('[POC] stage2-loader →', { file: file, src: src, isCheckout: isCheckout, isThankYou: isThankYou, host: d, path: p });
+      console.log('[POC] stage2-loader →', { file, src, isCheckout, isThankYou, host, path });
     }
   } catch (e) {
     try { console.warn('[POC] stage2-loader error:', e); } catch (_) {}
