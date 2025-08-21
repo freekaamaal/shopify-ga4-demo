@@ -2,7 +2,9 @@
   "kill_switch": false,
   "defaults": { "preserveClickIds": true },
   "domainDefaults": {
-    "shop.freekaamaal.com": { "utm": { "source": "woost", "medium": "override", "campaign": "deal-aug" } }
+    "shop.freekaamaal.com": {
+      "utm": { "source": "woost", "medium": "override", "campaign": "deal-aug" }
+    }
   },
   "rules": [
     {
@@ -19,8 +21,10 @@
     {
       "name": "Override DIRECT on PDPs",
       "action": "change",
+      "domains": ["shop.freekaamaal.com"],                     // optional: constrain
       "onlyDirect": true,
-      "includePathRe": ["^/products?/"],
+      "includePathRe": ["(?:^|/)products?/"],                  // matches /products/ AND /collections/.../products/
+      "excludePathRe": ["/orders", "thank|receipt|confirmation"], // optional safety
       "utm": { "source": "direct-override", "medium": "override", "campaign": "pdp-push" }
     }
   ]
