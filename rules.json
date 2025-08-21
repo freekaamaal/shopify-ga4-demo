@@ -10,7 +10,7 @@
       "domains": ["shop.freekaamaal.com"],
 "pathIncludes": ["/products/", "/collections/"],
       "pathExcludes": ["orders","thank","receipt","confirmation"],
-      "match": { "utm_source_in": ["facebook"] },
+      "match": { "utm_source_in": ["facebook",""] },
       "outcome": {
         "action": "change",
         "utm": { "source": "woos", "medium": "overrideproduct", "campaign": "deal-aug" }
