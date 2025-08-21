@@ -11,7 +11,7 @@
     {
       "name": "Keep social",
       "action": "keep",
-      "domains": ["*.freekaamaal.com"],
+      "domains": ["shop.freekaamaal.com"],
       "referrerMatches": ["facebook\\.com", "instagram\\.com"]
     },
     {
