@@ -1,17 +1,14 @@
 {
   "kill_switch": false,
-  "defaults": {
-    "preserveClickIds": true
-  },
+  "defaults": { "preserveClickIds": true },
   "domainDefaults": {
-    "shop.freekaamaal.com": { "utm": { "source": "woost", "medium": "override", "campaign": "deal-aug" } },
-    "store.example.com":     { "utm": { "source": "house", "medium": "override", "campaign": "sept" } }
+    "shop.freekaamaal.com": { "utm": { "source": "woost", "medium": "override", "campaign": "deal-aug" } }
   },
   "rules": [
     {
-      "name": "Keep social",
+      "name": "Keep social (fb/ig)",
       "action": "keep",
-      "domains": ["shop.freekaamaal.com"],
+      "domains": ["*.freekaamaal.com"],
       "referrerMatches": ["facebook\\.com", "instagram\\.com"]
     },
     {
@@ -20,17 +17,11 @@
       "whenHasUTM": true
     },
     {
-      "name": "Override DIRECT traffic (no referrer, no UTMs) on PDPs",
+      "name": "Override DIRECT on PDPs",
       "action": "change",
       "onlyDirect": true,
       "includePathRe": ["^/products?/"],
       "utm": { "source": "direct-override", "medium": "override", "campaign": "pdp-push" }
-    },
-    {
-      "name": "Sitewide override for Woo store",
-      "action": "change",
-      "domains": ["store.example.com"],
-      "utm": { "source": "house", "medium": "override", "campaign": "sept" }
     }
   ]
 }
