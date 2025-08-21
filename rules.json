@@ -1,22 +1,17 @@
 {
   "kill_switch": false,
   "defaults": { "preserveClickIds": true },
-
   "domainDefaults": {
     "shop.freekaamaal.com": {
       "utm": { "source": "debug-force", "medium": "override", "campaign": "sitewide-test" }
     }
   },
-
   "rules": [
     {
-      "name": "TEST: force change on all pages",
+      "name": "TEST force change sitewide",
       "action": "change",
       "domains": ["shop.freekaamaal.com"],
       "excludePathRe": ["orders", "(thank|receipt|confirmation)"]
-      // no includePathRe → matches every path
-      // no referrer/utm conditions → always runs
-      // UTM taken from domainDefaults above
     }
   ]
 }
