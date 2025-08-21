@@ -1,37 +1,31 @@
 {
   "kill_switch": false,
-
   "defaults": {
-    "preserveClickIds": true,   // keep gclid/fbclid/etc. when rewriting
-    "preSetCampaign": false     // set to true if you also want gtag('set',…) in Stage 3
+    "preserveClickIds": true,
+    "preSetCampaign": false
   },
-
   "rules": [
     {
-      "name": "FKM: replace facebook or empty source sitewide",
+      "name": "FKM: facebook → woos (sitewide)",
       "domains": ["shop.freekaamaal.com"],
-      "pathIncludes": ["/"],                // sitewide; use ["/products/"] for PDP-only
+      "pathIncludes": ["/"],
       "pathExcludes": ["orders","thank","receipt","confirmation"],
-      "match": { "utm_source_in": ["facebook", ""] },   // "" means empty/absent
+      "match": { "utm_source_in": ["facebook"] },
+      "outcome": {
+        "action": "change",
+        "utm": { "source": "woos", "medium": "override", "campaign": "deal-aug" }
+      }
+    },
+    {
+      "name": "FKM: empty → woos (sitewide)",
+      "domains": ["shop.freekaamaal.com"],
+      "pathIncludes": ["/"],
+      "pathExcludes": ["orders","thank","receipt","confirmation"],
+      "match": { "utm_source_in": [""] },
       "outcome": {
         "action": "change",
         "utm": { "source": "woos", "medium": "override", "campaign": "deal-aug" }
       }
     }
-
-    /* Add more rules below for other domains:
-    {
-      "name": "Another domain example",
-      "domains": ["store.example.com", "*.example.com"],
-      "pathIncludes": ["/products/"],
-      "match": { "utm_source_in": ["", "instagram", "direct"] },
-      "outcome": {
-        "action": "change",
-        "utm": { "source": "house", "medium": "override", "campaign": "sept" },
-        "preserveClickIds": true,
-        "preSetCampaign": false
-      }
-    }
-    */
   ]
 }
