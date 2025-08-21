@@ -1,31 +1,22 @@
 {
   "kill_switch": false,
   "defaults": { "preserveClickIds": true },
+
   "domainDefaults": {
     "shop.freekaamaal.com": {
-      "utm": { "source": "woost", "medium": "override", "campaign": "deal-aug" }
+      "utm": { "source": "debug-force", "medium": "override", "campaign": "sitewide-test" }
     }
   },
+
   "rules": [
     {
-      "name": "Keep social (fb/ig)",
-      "action": "keep",
-      "domains": ["*.freekaamaal.com"],
-      "referrerMatches": ["facebook\\.com", "instagram\\.com"]
-    },
-    {
-      "name": "Keep if landing already has UTMs",
-      "action": "keep",
-      "whenHasUTM": true
-    },
-    {
-      "name": "Override DIRECT on PDPs",
+      "name": "TEST: force change on all pages",
       "action": "change",
-      "domains": ["shop.freekaamaal.com"],                     // optional: constrain
-      "onlyDirect": true,
-      "includePathRe": ["(?:^|/)products?/"],                  // matches /products/ AND /collections/.../products/
-      "excludePathRe": ["/orders", "thank|receipt|confirmation"], // optional safety
-      "utm": { "source": "direct-override", "medium": "override", "campaign": "pdp-push" }
+      "domains": ["shop.freekaamaal.com"],
+      "excludePathRe": ["orders", "(thank|receipt|confirmation)"]
+      // no includePathRe → matches every path
+      // no referrer/utm conditions → always runs
+      // UTM taken from domainDefaults above
     }
   ]
 }
