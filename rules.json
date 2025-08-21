@@ -24,7 +24,7 @@
       "match": { "utm_source_in": [""] },
       "outcome": {
         "action": "change",
-        "utm": { "source": "woos", "medium": "override", "campaign": "deal-aug" }
+        "utm": { "source": "woos", "medium": "override1", "campaign": "deal-aug" }
       }
     }
   ]
