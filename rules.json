@@ -1,33 +1,37 @@
 {
   "kill_switch": false,
-  "defaults": { "preserveClickIds": true },
 
-  "domainDefaults": {
-    "shop.freekaamaal.com": {
-      "utm": { "source": "woost", "medium": "override", "campaign": "deal-aug" }
-    }
+  "defaults": {
+    "preserveClickIds": true,   // keep gclid/fbclid/etc. when rewriting
+    "preSetCampaign": false     // set to true if you also want gtag('set',…) in Stage 3
   },
 
   "rules": [
     {
-      "name": "Keep social (fb/ig)",
-      "action": "keep",
-      "domains": ["shop.freekaamaal.com", "*.freekaamaal.com"],
-      "referrerMatches": ["facebook\\.com", "instagram\\.com", "l\\.facebook\\.com", "m\\.facebook\\.com"]
-    },
-    {
-      "name": "Keep if landing already has UTMs",
-      "action": "keep",
-      "whenHasUTM": true
-    },
-    {
-      "name": "Override DIRECT on PDPs",
-      "action": "change",
+      "name": "FKM: replace facebook or empty source sitewide",
       "domains": ["shop.freekaamaal.com"],
-      "onlyDirect": true,
-      "includePathRe": ["^/(?:collections/[^/]+/)?products/"],   // PDP + PDP-in-collections
-      "excludePathRe": ["orders", "(thank|receipt|confirmation)"],
-      "utm": { "source": "direct-override", "medium": "override", "campaign": "pdp-push" }
+      "pathIncludes": ["/"],                // sitewide; use ["/products/"] for PDP-only
+      "pathExcludes": ["orders","thank","receipt","confirmation"],
+      "match": { "utm_source_in": ["facebook", ""] },   // "" means empty/absent
+      "outcome": {
+        "action": "change",
+        "utm": { "source": "woos", "medium": "override", "campaign": "deal-aug" }
+      }
     }
+
+    /* Add more rules below for other domains:
+    {
+      "name": "Another domain example",
+      "domains": ["store.example.com", "*.example.com"],
+      "pathIncludes": ["/products/"],
+      "match": { "utm_source_in": ["", "instagram", "direct"] },
+      "outcome": {
+        "action": "change",
+        "utm": { "source": "house", "medium": "override", "campaign": "sept" },
+        "preserveClickIds": true,
+        "preSetCampaign": false
+      }
+    }
+    */
   ]
 }
