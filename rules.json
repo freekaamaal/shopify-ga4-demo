@@ -8,7 +8,7 @@
     {
       "name": "FKM: facebook → woos (sitewide)",
       "domains": ["shop.freekaamaal.com"],
-"pathIncludes": ["products/floor-cleaner-liquid-5l-refill-pack-zesty-lemon-exclusive", "/collections/"],
+"pathIncludes": ["/products/floor-cleaner-liquid-5l-refill-pack-zesty-lemon-exclusive", "/collections/"],
       "pathExcludes": ["orders","thank","receipt","confirmation"],
 "match": { "utm_source_in": ["facebook", ""] },
       "outcome": {
