@@ -1,17 +1,33 @@
 {
   "kill_switch": false,
   "defaults": { "preserveClickIds": true },
+
   "domainDefaults": {
     "shop.freekaamaal.com": {
-      "utm": { "source": "debug-force", "medium": "override", "campaign": "sitewide-test" }
+      "utm": { "source": "woost", "medium": "override", "campaign": "deal-aug" }
     }
   },
+
   "rules": [
     {
-      "name": "TEST force change sitewide",
+      "name": "Keep social (fb/ig)",
+      "action": "keep",
+      "domains": ["shop.freekaamaal.com", "*.freekaamaal.com"],
+      "referrerMatches": ["facebook\\.com", "instagram\\.com", "l\\.facebook\\.com", "m\\.facebook\\.com"]
+    },
+    {
+      "name": "Keep if landing already has UTMs",
+      "action": "keep",
+      "whenHasUTM": true
+    },
+    {
+      "name": "Override DIRECT on PDPs",
       "action": "change",
       "domains": ["shop.freekaamaal.com"],
-      "excludePathRe": ["orders", "(thank|receipt|confirmation)"]
+      "onlyDirect": true,
+      "includePathRe": ["^/(?:collections/[^/]+/)?products/"],   // PDP + PDP-in-collections
+      "excludePathRe": ["orders", "(thank|receipt|confirmation)"],
+      "utm": { "source": "direct-override", "medium": "override", "campaign": "pdp-push" }
     }
   ]
 }
