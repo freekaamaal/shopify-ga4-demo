@@ -19,7 +19,7 @@
     {
       "name": "FKM: empty → woos (sitewide)",
       "domains": ["shop.freekaamaal.com"],
-      "pathIncludes": ["/"],
+      "pathIncludes": ["/ravi"],
       "pathExcludes": ["orders","thank","receipt","confirmation"],
       "match": { "utm_source_in": ["ravi"] },
       "outcome": {
