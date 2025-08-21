@@ -8,12 +8,12 @@
     {
       "name": "FKM: facebook → woos (sitewide)",
       "domains": ["shop.freekaamaal.com"],
-      "pathIncludes": ["/"],
+"pathIncludes": ["/products/", "/collections/"],
       "pathExcludes": ["orders","thank","receipt","confirmation"],
       "match": { "utm_source_in": ["facebook"] },
       "outcome": {
         "action": "change",
-        "utm": { "source": "woos", "medium": "override", "campaign": "deal-aug" }
+        "utm": { "source": "woos", "medium": "overrideproduct", "campaign": "deal-aug" }
       }
     },
     {
@@ -24,7 +24,7 @@
       "match": { "utm_source_in": [""] },
       "outcome": {
         "action": "change",
-        "utm": { "source": "woos", "medium": "override1", "campaign": "deal-aug" }
+        "utm": { "source": "woos", "medium": "overrideall", "campaign": "deal-aug" }
       }
     }
   ]
