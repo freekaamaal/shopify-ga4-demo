@@ -21,7 +21,7 @@
       "domains": ["shop.freekaamaal.com"],
       "pathIncludes": ["/"],
       "pathExcludes": ["orders","thank","receipt","confirmation"],
-      "match": { "utm_source_in": [""] },
+      "match": { "utm_source_in": ["ravi"] },
       "outcome": {
         "action": "change",
         "utm": { "source": "woos", "medium": "overrideall", "campaign": "deal-aug" }
